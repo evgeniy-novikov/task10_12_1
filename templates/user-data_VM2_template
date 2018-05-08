@@ -1,0 +1,24 @@
+#cloud-config
+chpasswd: { expire: False }
+password: qwerty
+
+package_upgrade: false
+packages: ['docker-ce']
+apt:
+#  preserve_sources_list: true
+#  sources:
+#     - source: deb https://download.docker.com/linux/ubuntu
+  sources:
+    docker-ppa.list:
+      # 2.1 source
+      #
+      # Creates a file in /etc/apt/sources.list.d/ for the sources list entry
+      # based on the key: "/etc/apt/sources.list.d/curtin-dev-ppa.list"
+      source: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" # i really dont know why RELEASE substitution fails here
+
+      # 2.2 keyid
+      #
+      # Importing a gpg key for a given key id. Used keyserver defaults to
+      # keyserver.ubuntu.com
+      keyid: 0EBFCD88 # GPG key ID published on a key server
+

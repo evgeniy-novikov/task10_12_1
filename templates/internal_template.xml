@@ -1,0 +1,4 @@
+<network>
+  <name>${INTERNAL_NET_NAME}</name>
+  <ip address='$INTERNAL_NET_IP' netmask='$INTERNAL_NET_MASK'/>
+</network>

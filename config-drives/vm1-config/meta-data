@@ -1,0 +1,25 @@
+instance-id: 34cffdc0-0498-4248-8497-2150d61c073e
+hostname: 
+local-hostname: 
+network-interfaces: |
+  auto 
+  iface  inet dhcp
+  
+  auto 
+  iface  inet static
+  address 
+  network 
+  netmask 
+
+  auto 
+  iface  inet static
+  address 
+  network 
+  netmask 
+  
+  auto 
+  iface  inet manual
+    pre-up ip link add  type vxlan id  local  remote  || true
+    up ip link set  up
+    down ip link set  down
+    post-down ip link del  || true 

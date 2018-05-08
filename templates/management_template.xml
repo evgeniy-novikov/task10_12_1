@@ -1,0 +1,5 @@
+<network>
+  <name>${MANAGEMENT_NET_NAME}</name>
+  <ip address='$MANAGEMENT_NET_IP' netmask='$MANAGEMENT_NET_MASK'/>
+</network>
+

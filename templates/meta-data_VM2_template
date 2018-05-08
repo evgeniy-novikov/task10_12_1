@@ -1,0 +1,25 @@
+instance-id: 6aab6c2a-3291-4e53-b33d-0b590fa79158
+hostname: ${VM2_NAME}
+local-hostname: ${VM2_NAME}
+network-interfaces: |
+  auto ${VM2_INTERNAL_IF}
+  iface ${VM2_INTERNAL_IF} inet static
+  address ${VM2_INTERNAL_IP}
+  network ${INTERNAL_NET_IP}
+  netmask ${INTERNAL_NET_MASK}
+  gateway ${VM1_INTERNAL_IP}
+  dns-nameservers ${VM_DNS}
+
+  auto ${VM2_MANAGEMENT_IF}
+  iface ${VM2_MANAGEMENT_IF} inet static
+  address ${VM2_MANAGEMENT_IP}
+  network ${MANAGEMENT_NET_IP}
+  netmask ${MANAGEMENT_NET_MASK}
+
+  auto ${VXLAN_IF}
+  iface ${VXLAN_IF} inet manual
+    pre-up ip link add ${VXLAN_IF} type vxlan id ${VID} local ${VM2_VXLAN_IP} remote ${VM1_VXLAN_IP} || true
+    up ip link set ${VXLAN_IF} up
+    down ip link set ${VXLAN_IF} down
+    post-down ip link del ${VXLAN_IF} || true
+
