@@ -22,7 +22,7 @@ MANAGEMENT_NET_MASK=255.255.255.0
 MANAGEMENT_HOST_IP=${MANAGEMENT_NET}.1
 
 # VMs global parameters
-SSH_PUB_KEY=/home/jackal/.ssh/id_rsa.pub
+SSH_PUB_KEY=/opt/task10_12_1/key/id_rsa.pub
 VM_TYPE=hvm
 VM_DNS=8.8.8.8
 # overlay
