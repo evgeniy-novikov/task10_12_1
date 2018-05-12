@@ -12,7 +12,6 @@ mkdir -p $(dirname "$VM2_HDD")
 
 ############################ NETWORKS ################################
 #External
-
 echo "
 <network>
   <name>$EXTERNAL_NET_NAME</name>
@@ -37,7 +36,6 @@ echo "
 </network>" > $dir/networks/$INTERNAL_NET_NAME.xml
 
 #Management
-
 echo "
 <network>
   <name>$MANAGEMENT_NET_NAME</name>
@@ -60,8 +58,8 @@ virsh net-autostart $MANAGEMENT_NET_NAME
 ##################################################################################
 
 IMG_DESTINATION="/var/lib/libvirt/images/ubunut-server-16.04.qcow2"
-# IMG_SOURCE_URL="https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img"
-# wget -O "$IMG_DESTINATION" "$IMG_SOURCE_URL"
+IMG_SOURCE_URL="https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img"
+wget -O "$IMG_DESTINATION" "$IMG_SOURCE_URL"
 
 ################ Claud init ###############
 
@@ -86,7 +84,7 @@ EOF
 ###### vm2 user-data ######
 cat << EOF > config-drives/$VM2_NAME-config/user-data
 #cloud-config
-ssh_authorized_keys:.
+ssh_authorized_keys:
   - $(cat  $SSH_PUB_KEY)
 apt_update: true
 apt_sources:
@@ -140,7 +138,7 @@ network-interfaces: |
   address $VM2_MANAGEMENT_IP
   netmask $MANAGEMENT_NET_MASK" > config-drives/$VM2_NAME-config/meta-data
 
-###### MK ISO ######
+###### create ISO ######
 mkisofs -o $VM1_CONFIG_ISO -V cidata -r -J --quiet config-drives/$VM1_NAME-config
 mkisofs -o $VM2_CONFIG_ISO -V cidata -r -J --quiet config-drives/$VM2_NAME-config
 
@@ -249,9 +247,6 @@ echo "<domain type='kvm'>
 
 
 </domain>" > $dir/vm2.xml
-
-
-echo "Create config drives"
 
 echo "start VM1"
 cp $IMG_DESTINATION $VM1_HDD
